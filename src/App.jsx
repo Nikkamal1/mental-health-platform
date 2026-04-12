@@ -25,8 +25,8 @@ function App() {
           <Route path="/detail1" element={<Detail1 />} />
           <Route path="/detail2" element={<Detail2 />} />
           <Route path="/stress" element={<StressAssessment />} />
-          <Route path="/mental" element={<MentalStrength />} />
-          <Route path="/game" element={<MindHealthGame />} />
+          <Route path="/game" element={<MentalStrength />} />
+          <Route path="/mental" element={<MindHealthGame />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
 

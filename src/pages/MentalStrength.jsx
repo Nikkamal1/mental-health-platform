@@ -5,12 +5,12 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwMilUPJnRM0hTb
 const BG = "linear-gradient(135deg,#f0f7ee,#e8f4f8)";
 const cards = [
   { id: 1, question: "1 สัปดาห์ที่ผ่านมานี้\nมีเรื่องอะไรบ้างที่คุณ\nภูมิใจในตัวเอง", answerType: "text", placeholder: "เขียนสิ่งที่คุณภูมิใจ..." },
-  { id: 2, question: "กรดใบนี้เปิดโอกาสให้คุณ\nตั้งคำหมายกับตัวเอง 2 ข้อ\nลองคุยกับตัวคุณดูนะ", answerType: "goals", placeholder: ["คำหมายข้อที่ 1...", "คำหมายข้อที่ 2..."] },
-  { id: 3, question: "พีชเข้อีของคุณ\nออกมา 3-5 อย่าง", answerType: "text", placeholder: "เขียนข้อดีของคุณ..." },
-  { id: 4, question: "หมีโกหลาได้คุยกันตัวเองตอนเด็ก\nอยากจะบอกกันเพิ่มเติมไร\nและเด็กเมื่อนี้อยากบอกอะไรกับคุณทัง", answerType: "text", placeholder: "เขียนจดหมายถึงตัวเองตอนเด็ก..." },
+  { id: 2, question: "การ์ดใบนี้เปิดโอกาสให้คุณ\nตั้งคำถามกับตัวเอง 2 ข้อ\nลองคุยกับตัวคุณดูนะ", answerType: "goals", placeholder: ["คำถามข้อที่ 1...", "คำถามข้อที่ 2..."] },
+  { id: 3, question: "เขียนข้อดีของคุณ\nออกมา 3-5 อย่าง", answerType: "text", placeholder: "เขียนข้อดีของคุณ..." },
+  { id: 4, question: "ถ้ามีโอกาสได้คุยกันตัวเองตอนเด็ก\nอยากจะบอกเขาว่าอะไร\nและเด็กคนนั้นอยากบอกอะไรกับคุณบ้าง", answerType: "text", placeholder: "เขียนจดหมายถึงตัวเองตอนเด็ก..." },
   { id: 5, question: "วันนี้คุณใจดีกับตัวเอง\nแค่ไหน (0-10)", answerType: "score", placeholder: "0" },
   { id: 6, question: "สิ่งที่คุณชอบในตัวเองมากที่สุด\n1 อย่าง คืออะไร", answerType: "text", placeholder: "เขียนสิ่งที่คุณชอบในตัวเอง..." },
-  { id: 7, question: "วันนี้คุณรู้สึกฉังไงกับชีวิตตัวเอง\nให้คะแนน (0-10)\nและอะไรทำให้เป็นแบบนี้", answerType: "scoreWithReason", placeholder: "อธิบายความรู้สึก..." },
+  { id: 7, question: "วันนี้คุณรู้สึกยังไงกับชีวิตตัวเอง\nให้คะแนน (0-10)\nและอะไรทำให้เป็นเลขนี้", answerType: "scoreWithReason", placeholder: "อธิบายความรู้สึก..." },
   { id: 8, question: "มีเรื่องไหนในชีวิตช่วงนี้\nที่คุณอยากพัฒนาตัวเองให้ดีขึ้น", answerType: "text", placeholder: "เขียนสิ่งที่อยากพัฒนา..." },
 ];
 
@@ -183,7 +183,7 @@ function DoneScreen({ nickname, onRestart }) {
 }
 
 // ── Main ──
-function MindHealthGame() {
+function MentalStrength() {
   const [stage, setStage] = useState("nickname"); // nickname | game | done
   const [nickname, setNickname] = useState("");
   const [current, setCurrent] = useState(0);
@@ -316,4 +316,4 @@ function MindHealthGame() {
   );
 }
 
-export default MindHealthGame;
+export default MentalStrength;
