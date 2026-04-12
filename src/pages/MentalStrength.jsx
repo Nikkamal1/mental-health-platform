@@ -53,6 +53,12 @@ function CardBorder() {
 // ── Header + HowToPlay — ใช้ร่วมกันทุก stage ──
 function PageHeader() {
   const [open, setOpen] = useState(false);
+  const steps = [
+    { icon: "🎴", text: "สุ่มการ์ด 1 ใบ" },
+    { icon: "📅", text: "เล่นต่อเนื่องเป็นเวลา 30 วัน" },
+    // { icon: "💭", text: "ด้านหน้าการ์ดคือ \"DEAR ME\" เป็นคำถามให้คุณได้เข้าใจตัวเอง" },
+    // { icon: "💌", text: "ด้านหลังการ์ดคือ \"DEAR YOU\" เป็นข้อความดีๆ จากพวกเรา" },
+  ];
   return (
     <>
       {/* Header bar */}
@@ -63,10 +69,17 @@ function PageHeader() {
       }}>
         <div style={{ fontSize: "clamp(1.4rem,4vw,1.8rem)", marginBottom: "4px" }}>🌸</div>
         <h1 style={{ color: "#fff", margin: "0 0 4px", fontSize: "clamp(1.1rem,3vw,1.6rem)", fontWeight: 800 }}>
-          การ์ดพลังใจ
+          เกมสุขภาพใจ
         </h1>
         <p style={{ color: "rgba(255,255,255,0.8)", margin: 0, fontSize: "clamp(0.75rem,2vw,0.88rem)" }}>
-          แตะการ์ดเพื่อพลิก · Dear Me → Dear You
+          "ผู้เล่นจะได้รู้จักและเรียนรู้ตัวเอง
+ในมุมมองใหม่ๆ ผ่านการสำรวจ
+ความรู้สึกของตัวเอง</p> 
+        <p style={{ color: "rgba(255,255,255,0.8)", margin: 0, fontSize: "clamp(0.75rem,2vw,0.88rem)" }}>
+ณ ปัจจุบัน
+เพื่อที่จะได้เข้าใจ ยอมรับในตัวตน
+และเติบโตโดยไม่ลืมคุณค่าของตัวเอง
+พร้อมทั้งได้รับการฮีลใจและกำลังใจ"
         </p>
       </div>
 
@@ -95,14 +108,55 @@ function PageHeader() {
             fontFamily: "'Sarabun',sans-serif", fontSize: "clamp(0.82rem,2vw,0.9rem)",
             color: "#5a3e2b", lineHeight: 1.8,
           }}>
-            <p style={{ margin: "0 0 8px", lineHeight: 1.9, textAlign: "center" }}>
-              "ผู้เล่นจะได้รู้จักและเรียนรู้ตัวเอง
-ในมุมมองใหม่ๆ ผ่านการสำรวจความรู้สึกของตัวเอง
-ณ ปัจจุบัน เพื่อที่จะได้เข้าใจ ยอมรับในตัวตน
-และเติบโตโดยไม่ลืมคุณค่าของตัวเอง
-พร้อมทั้งได้รับการฮีลใจและกำลังใจ"
-            </p>
+                      {/* Divider */}
+          <div style={{ borderTop: "1px dashed #e8d5a0", marginBottom: "14px" }} />
+
+          {/* คำแนะนำ */}
+          <p style={{
+            fontFamily: "'Sarabun',sans-serif",
+            fontSize: "clamp(0.78rem,2vw,0.88rem)",
+            color: "#6b4423",
+            lineHeight: 1.9,
+            margin: "0 0 14px",
+            textAlign: "center",
+          }}>
+            เพื่อการเล่นอย่างมีประสิทธิภาพ พวกเราขอแนะนำให้เล่นตอนก่อนนอน
+            หรืออาจเลือกมุมเงียบๆ นั่งลงอย่างสบายใจ ยามที่คุณพร้อมจะให้เวลากับตัวเองสัก 5 นาที
+            พวกเราขอแนะนำให้คุณหยิบสมุดขึ้นมาหนึ่งเล่ม หาปากกาสักแท่ง
+            และจดคำตอบของคุณเองในแต่ละวัน เก็บไว้เป็นของขวัญของใจให้คุณใน 30 วันข้างหน้านี้
+            การ์ดชุดนี้สามารถหยิบกลับมาเล่นซ้ำได้เสมอ ในวันที่คุณอยากกลับมาสำรวจตัวเอง
+          </p>
+
+          {/* Divider */}
+          <div style={{ borderTop: "1px dashed #e8d5a0", marginBottom: "14px" }} />
+
+          {/* HOW TO PLAY label */}
+          <p style={{
+            fontFamily: "'Dancing Script',cursive",
+            fontSize: "clamp(1rem,3vw,1.15rem)",
+            color: "#7b3f2e",
+            fontWeight: 700,
+            margin: "0 0 10px",
+          }}>
+            HOW TO PLAY
+          </p>
+           {/* Steps */}
+          {steps.map((item, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "10px", marginBottom: "8px" }}>
+              <span style={{ fontSize: "1rem", lineHeight: 1.6, flexShrink: 0 }}>{item.icon}</span>
+              <p style={{
+                margin: 0,
+                fontFamily: "'Sarabun',sans-serif",
+                fontSize: "clamp(0.78rem,2vw,0.88rem)",
+                color: "#4a2c0a",
+                lineHeight: 1.7,
+              }}>
+                {item.text}
+              </p>
+            </div>
+               ))}
           </div>
+          
         )}
       </div>
     </>
