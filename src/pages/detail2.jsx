@@ -74,14 +74,14 @@ useEffect(() => {
         { src: detailImg6, alt: "Detail image 4.1" },
       ],
     },
-    {
-      src: heroImage5,
-      alt: "คลิป",
-      description: "คลิกเพื่อดูรายละเอียดเพิ่มเติม",
-      detailImages: [
-        // { src: detailImg6, alt: "Detail image 5.1" },
-      ],
-    },
+    // {
+    //   src: heroImage5,
+    //   alt: "คลิป",
+    //   description: "คลิกเพื่อดูรายละเอียดเพิ่มเติม",
+    //   detailImages: [
+    //     { src: detailImg6, alt: "Detail image 5.1" },
+    //   ],
+    // },
   ];
 
   const handleImageClick = (details = []) => {

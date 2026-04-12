@@ -60,14 +60,14 @@ function Media() {
       link: "/detail2",
       position: "top-right",
     },
-    {
-      src: heroImage3,
-      alt: "Media image 3",
-      title: "",
-      description: "คลิกเพื่อดูรายละเอียดเพิ่มเติม",
-      link: "/detail3",
-      position: "bottom-center",
-    },
+    // {
+    //   src: heroImage3,
+    //   alt: "Media image 3",
+    //   title: "",
+    //   description: "คลิกเพื่อดูรายละเอียดเพิ่มเติม",
+    //   link: "/detail3",
+    //   position: "bottom-center",
+    // },
   ];
 
   const topImages = images.filter((img) => img.position !== "bottom-center");
