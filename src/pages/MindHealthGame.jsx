@@ -111,30 +111,8 @@ function FlowerCornerYellow({ style }) {
   );
 }
 
-// ─── iOS Safari Fix ────────────────────────────────────────────────────────────
-// iOS Safari มีปัญหากับ backface-visibility บน position:absolute
-// วิธีแก้: ใช้ opacity toggle แทน 3D flip เมื่อตรวจพบ iOS
-// แต่ถ้าอยากคง animation 3D ไว้ ต้องเพิ่ม -webkit- prefix ครบและใช้ translateZ(0)
-// ─────────────────────────────────────────────────────────────────────────────
-
-const faceStyle = {
-  position: "absolute",
-  inset: 0,
-  // ✅ KEY FIX: ต้องใส่ทั้ง -webkit- และ standard prefix
-  WebkitBackfaceVisibility: "hidden",
-  backfaceVisibility: "hidden",
-  // ✅ KEY FIX: บังคับให้ใช้ GPU layer ป้องกัน iOS ไม่ render ถูก
-  WebkitTransform: "translateZ(0)",
-  transform: "translateZ(0)",
-  borderRadius: "16px",
-  overflow: "hidden",
-  display: "flex",
-  flexDirection: "column",
-};
-
 function FlipCard({ index }) {
   const [flipped, setFlipped] = useState(false);
-
   return (
     <div style={{ width: "100%", position: "relative" }}>
       <div
@@ -143,32 +121,26 @@ function FlipCard({ index }) {
           position: "relative",
           width: "100%",
           paddingBottom: "133%",
-          // ✅ KEY FIX: perspective ต้องอยู่บน wrapper ไม่ใช่ตัวการ์ดเอง
           perspective: "1000px",
-          WebkitPerspective: "1000px",
           cursor: "pointer",
           userSelect: "none",
         }}
       >
         <div style={{
-          position: "absolute",
-          inset: 0,
-          // ✅ KEY FIX: ต้องใส่ -webkit- prefix ด้วย
-          WebkitTransformStyle: "preserve-3d",
+          position: "absolute", inset: 0,
           transformStyle: "preserve-3d",
           transition: "transform 0.65s cubic-bezier(0.4,0,0.2,1)",
-          WebkitTransition: "-webkit-transform 0.65s cubic-bezier(0.4,0,0.2,1)",
-          // ✅ KEY FIX: ใช้ทั้ง -webkit- และ standard เวลา flip
-          WebkitTransform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
           transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
         }}>
-
           {/* ── หน้า: Dear Me ── */}
           <div style={{
-            ...faceStyle,
+            position: "absolute", inset: 0, backfaceVisibility: "hidden",
             background: "linear-gradient(145deg, #fdf8ed, #fef6e4)",
+            borderRadius: "16px",
             boxShadow: "0 4px 20px rgba(180,150,60,0.15), 0 1px 4px rgba(0,0,0,0.06)",
             border: "1.5px solid #f0dea0",
+            overflow: "hidden",
+            display: "flex", flexDirection: "column",
           }}>
             <DaisyCorner style={{ top: -4, right: -4 }} />
             <DaisyCorner style={{ bottom: -4, left: -4, transform: "rotate(180deg)" }} />
@@ -190,16 +162,16 @@ function FlipCard({ index }) {
               แตะเพื่อพลิก ↺
             </div>
           </div>
-
           {/* ── หลัง: Dear You ── */}
           <div style={{
-            ...faceStyle,
-            // ✅ KEY FIX: ต้องใส่ทั้ง -webkit- และ standard
-            WebkitTransform: "rotateY(180deg) translateZ(0)",
-            transform: "rotateY(180deg) translateZ(0)",
+            position: "absolute", inset: 0, backfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
             background: "linear-gradient(145deg, #fffde7, #fff8e1, #fef3c7)",
+            borderRadius: "16px",
             boxShadow: "0 4px 20px rgba(245,200,66,0.18), 0 1px 4px rgba(0,0,0,0.06)",
             border: "1.5px solid #fde68a",
+            overflow: "hidden",
+            display: "flex", flexDirection: "column",
           }}>
             <FlowerCornerYellow style={{ top: -4, right: -4 }} />
             <FlowerCornerYellow style={{ bottom: -4, left: -4, transform: "rotate(180deg)" }} />
@@ -227,7 +199,6 @@ function FlipCard({ index }) {
               แตะเพื่อพลิกกลับ ↺
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -237,13 +208,14 @@ function FlipCard({ index }) {
 function HowToPlay() {
   const [open, setOpen] = useState(false);
   const steps = [
-    { icon: "🎴", text: "สุ่มการ์ด 1 ใบ" },
-    { icon: "📅", text: "เล่นต่อเนื่องเป็นเวลา 30 วัน" },
+    // { icon: "🎴", text: "สุ่มการ์ด 1 ใบ" },
+    // { icon: "📅", text: "เล่นต่อเนื่องเป็นเวลา 30 วัน" },
     { icon: "💭", text: "ด้านหน้าการ์ดคือ \"DEAR ME\" เป็นคำถามให้คุณได้เข้าใจตัวเอง" },
     { icon: "💌", text: "ด้านหลังการ์ดคือ \"DEAR YOU\" เป็นข้อความดีๆ จากพวกเรา" },
   ];
   return (
     <div style={{ maxWidth: "960px", margin: "0 auto", padding: "12px clamp(1rem,3vw,1.5rem) 0" }}>
+      {/* Toggle Button */}
       <button
         onClick={() => setOpen(o => !o)}
         style={{
@@ -271,6 +243,7 @@ function HowToPlay() {
         }}>▼</span>
       </button>
 
+      {/* Expandable Content */}
       {open && (
         <div style={{
           background: "linear-gradient(145deg, #fdf8ed, #fef6e4)",
@@ -279,8 +252,11 @@ function HowToPlay() {
           borderRadius: "0 0 16px 16px",
           padding: "0 20px 16px",
         }}>
+          {/* Divider */}
           <div style={{ borderTop: "1px dashed #e8d5a0", marginBottom: "14px" }} />
-          <p style={{
+
+          {/* คำแนะนำ */}
+          {/* <p style={{
             fontFamily: "'Sarabun',sans-serif",
             fontSize: "clamp(0.78rem,2vw,0.88rem)",
             color: "#6b4423",
@@ -293,9 +269,13 @@ function HowToPlay() {
             พวกเราขอแนะนำให้คุณหยิบสมุดขึ้นมาหนึ่งเล่ม หาปากกาสักแท่ง
             และจดคำตอบของคุณเองในแต่ละวัน เก็บไว้เป็นของขวัญของใจให้คุณใน 30 วันข้างหน้านี้
             การ์ดชุดนี้สามารถหยิบกลับมาเล่นซ้ำได้เสมอ ในวันที่คุณอยากกลับมาสำรวจตัวเอง
-          </p>
+          </p> */}
+
+          {/* Divider */}
           <div style={{ borderTop: "1px dashed #e8d5a0", marginBottom: "14px" }} />
-          <p style={{
+
+          {/* HOW TO PLAY label */}
+          {/* <p style={{
             fontFamily: "'Dancing Script',cursive",
             fontSize: "clamp(1rem,3vw,1.15rem)",
             color: "#7b3f2e",
@@ -303,7 +283,9 @@ function HowToPlay() {
             margin: "0 0 10px",
           }}>
             HOW TO PLAY
-          </p>
+          </p> */}
+
+          {/* Steps */}
           {steps.map((item, i) => (
             <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "10px", marginBottom: "8px" }}>
               <span style={{ fontSize: "1rem", lineHeight: 1.6, flexShrink: 0 }}>{item.icon}</span>
@@ -329,16 +311,20 @@ function MindHealthGame() {
     <div style={{ minHeight: "100vh", background: "linear-gradient(135deg,#f0f7ee,#fef9ec)", fontFamily: "'Sarabun','Prompt',sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
 
+      {/* Header */}
       <div style={{ background: "linear-gradient(135deg,#5ab1cf,#3d9ab8)", padding: "clamp(1.2rem,4vw,2rem) clamp(1rem,4vw,2rem)", textAlign: "center" }}>
         <div style={{ fontSize: "clamp(1.4rem,4vw,1.8rem)", marginBottom: "4px" }}>🌸</div>
         <h1 style={{ color: "#fff", margin: "0 0 4px", fontSize: "clamp(1.1rem,3vw,1.6rem)", fontWeight: 800 }}>การ์ดพลังใจ</h1>
         <p style={{ color: "rgba(255,255,255,0.8)", margin: 0, fontSize: "clamp(0.75rem,2vw,0.88rem)" }}>
           แตะการ์ดเพื่อพลิก · Dear Me → Dear You
         </p>
+        
       </div>
 
+      {/* How To Play — วางระหว่าง Header กับ Grid */}
       <HowToPlay />
 
+      {/* Grid */}
       <div style={{
         maxWidth: "960px", margin: "0 auto",
         padding: "clamp(1rem,3vw,1.5rem)",
