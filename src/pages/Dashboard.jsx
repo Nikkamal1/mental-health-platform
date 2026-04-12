@@ -104,7 +104,6 @@ function Dashboard() {
     setLoading(false);
   };
 
-  // โหลดอัตโนมัติตอนเปิดหน้า
   useEffect(() => { fetchData(); }, []);
 
   const filtered = useMemo(() =>
@@ -112,8 +111,21 @@ function Dashboard() {
     [data, search]
   );
 
-  const avgQ5 = useMemo(() => data.length ? data.reduce((s, d) => s + Number(d.q5 || 0), 0) / data.length : 0, [data]);
-  const avgQ7 = useMemo(() => data.length ? data.reduce((s, d) => s + Number(d.q7s || 0), 0) / data.length : 0, [data]);
+  // คำนวณเฉลี่ยเฉพาะ entry ที่มีค่าจริงเท่านั้น (ไม่นับรวมค่าว่าง)
+  const avgQ5 = useMemo(() => {
+    const valid = data
+      .map(d => Number(d.q5))
+      .filter((v, i) => data[i].q5 !== "" && data[i].q5 !== null && data[i].q5 !== undefined && !isNaN(v));
+    return valid.length ? valid.reduce((s, v) => s + v, 0) / valid.length : 0;
+  }, [data]);
+
+  const avgQ7 = useMemo(() => {
+    const valid = data
+      .map(d => Number(d.q7s))
+      .filter((v, i) => data[i].q7s !== "" && data[i].q7s !== null && data[i].q7s !== undefined && !isNaN(v));
+    return valid.length ? valid.reduce((s, v) => s + v, 0) / valid.length : 0;
+  }, [data]);
+
   const scoreColor = (v) => v >= 7 ? "#6a9967" : v >= 4 ? "#f59e0b" : "#ef4444";
 
   return (
@@ -164,7 +176,7 @@ function Dashboard() {
               <StatCard icon="👥" label="ผู้เล่นทั้งหมด" value={data.length} sub={`วันนี้ ${data.filter(d => d.date === data[0]?.date).length} คน`} color="#5ab1cf" />
               <StatCard icon="💚" label="คะแนนใจดีกับตัวเอง (เฉลี่ย)" value={avgQ5.toFixed(1)} sub="จาก 10 คะแนน" color="#6a9967" />
               <StatCard icon="😊" label="คะแนนความรู้สึก (เฉลี่ย)" value={avgQ7.toFixed(1)} sub="จาก 10 คะแนน" color="#f59e0b" />
-              <StatCard icon="🌱" label="คะแนนสูงสุด" value={Math.max(...data.map(d => Number(d.q5 || 0)))} sub="ใจดีกับตัวเองมากที่สุด" color="#8b5cf6" />
+              <StatCard icon="🌱" label="คะแนนสูงสุด" value={(() => { const valid = data.map(d => Number(d.q5)).filter(v => !isNaN(v) && v > 0); return valid.length ? Math.max(...valid) : "-"; })()} sub="ใจดีกับตัวเองมากที่สุด" color="#8b5cf6" />
             </div>
 
             {/* Tabs */}
