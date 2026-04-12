@@ -67,7 +67,7 @@ function PageHeader() {
         padding: "clamp(1.2rem,4vw,2rem) clamp(1rem,4vw,2rem)",
         textAlign: "center",
       }}>
-        <div style={{ fontSize: "clamp(1.4rem,4vw,1.8rem)", marginBottom: "4px" }}>🌸</div>
+        <div style={{ fontSize: "clamp(1.4rem,4vw,1.8rem)", marginBottom: "4px" }}>🎮</div>
         <h1 style={{ color: "#fff", margin: "0 0 4px", fontSize: "clamp(1.1rem,3vw,1.6rem)", fontWeight: 800 }}>
           เกมสุขภาพใจ
         </h1>
