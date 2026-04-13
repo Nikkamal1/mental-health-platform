@@ -167,7 +167,7 @@ function FlipCard({ index }) {
                 <p style={{
                   margin: 0, textAlign: "center",
                   fontFamily: "'Sarabun',sans-serif",
-                  fontSize: "clamp(0.75rem,1.8vw,0.92rem)",
+                  fontSize: "clamp(0.75rem,1.3vw,0.92rem)",
                   color: "#4a2c0a", fontWeight: 600, lineHeight: 1.8,
                   whiteSpace: "pre-line",
                 }}>{dearMeCards[index]}</p>
@@ -205,7 +205,7 @@ function FlipCard({ index }) {
                   <p style={{
                     margin: 0, textAlign: "center",
                     fontFamily: "'Sarabun',sans-serif",
-                    fontSize: "clamp(0.75rem,1.3vw,0.92rem)",
+                    fontSize: "clamp(0.75rem,1.25vw,0.92rem)",
                     color: "#4a2c0a", fontWeight: 600, lineHeight: 1.8,
                     whiteSpace: "pre-line",
                   }}>{dearYouCards[index]}</p>
