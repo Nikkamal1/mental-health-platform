@@ -60,7 +60,6 @@ function StressAssessment() {
             to: 5,
             meaning: "ความเครียดต่ำมาก",
             meaningDetail: "คุณมีความเครียดน้อยกว่าปกติ อาจเป็นเพราะ คุณมีชีวิตที่เรียบง่ายไม่จำเป็นต้องต่อสู้ดิ้นรนในการดำเนินชีวิตสีกเท่าใดนัก ชีวิตไม่ค่อยมีเรื่องให้ต้องตื่นเต้น และคุณเองก็ไม่ค่อยกระตือรือร้นเลย ",
-            // image: "/images/stress_0_5.png",
             emoji: "😊",
             bgColor: "bg-blue-50 border-blue-200",
             badgeColor: "bg-blue-200 text-blue-900",
@@ -72,12 +71,10 @@ function StressAssessment() {
             to: 17,
             meaning: "ความเครียดต่ำ",
             meaningDetail: "คุณมีความเครียดในระดับปกติ นั่นคือ คุณสามารถจัดการกับความเครียดที่เกิดขึ้นในชีวิตประจำวันได้ดีและสามารถปรับตัว ปรับใจ ให้เข้ากับสถานการณ์ต่าง ๆ ได้อย่างถูกต้องเหมาะสม คุณควรพยายามคงระดับความเครียดในระดับนี้ต่อไปให้ได้นาน ๆ",
-            // image: "/images/stress_6_7.png",
             emoji: "🙂",
             bgColor: "bg-green-50 border-green-200",
             badgeColor: "bg-green-200 text-green-900",
             emojiBg: "bg-green-100"
-
         },
         {
             label: "18 - 25",
@@ -85,7 +82,6 @@ function StressAssessment() {
             to: 25,
             meaning: "ความเครียดปานกลาง",
             meaningDetail: "คุณมีความเครียดสูงกว่าระดับปกติเล็กน้อย แสดงว่า คุณอาจกำลังมีปัญหาบางอย่างที่ทำให้ไม่สบายใจอยู่ ความเครียดในระดับนี้ อาจทำให้มีอาการผิดปกติทางร่างกาย จิตใจ และพฤติกรรมเล็กน้อยพอทนได้ และเมื่อได้พักผ่อนหย่อนใจบ้างก็จะรู้สึกดีขึ้นเอง",
-            // image: "/images/stress_18_25.png",
             emoji: "😐",
             bgColor: "bg-amber-50 border-amber-200",
             badgeColor: "bg-amber-200 text-amber-900",
@@ -97,12 +93,10 @@ function StressAssessment() {
             to: 29,
             meaning: "ความเครียดค่อนข้างสูง",
             meaningDetail: "คุณมีความเครียดสูงกว่าระดับปกติปานกลาง แสดงว่า คุณอาจกำลังมีปัญหาบางอย่างในชีวิตที่คุณยังหาทางแก้ไขไม่ได้ ทำให้มีอาการผิดปกติทางร่างกาย จิตใจและพฤติกรรมอย่างเห็นได้ชัด และแม้คุณจะพักผ่อนหย่อนใจแล้ว ก็ยังอาจจะไม่หายเครียด ต้องฝึกเทคนิคเฉพาะในการคลายเครียดจึงจะช่วยได้",
-            // image: "/images/stress_26_29.png",
             emoji: "😟",
             bgColor: "bg-orange-50 border-orange-200",
             badgeColor: "bg-orange-200 text-orange-900",
             emojiBg: "bg-orange-100"
-
         },
         {
             label: "30 - 60",
@@ -110,7 +104,6 @@ function StressAssessment() {
             to: 60,
             meaning: "ความเครียดสูงมาก",
             meaningDetail: "คุณมีความเครียดสูงกว่าระดับปกติมาก คุณอาจกำลังเผชิญภาวะวิกฤตในชีวิตหรือไม่คุณก็ได้สะสมความเครียด เอาไว้มากจนเกินไปเป็นเวลานาน ทำให้มีอาการเจ็บป่วย ที่รุนแรง หรือเรื้อรัง ความเครียดในระดับนี้ นอกจากต้องฝึกเทคนิคกาคลายเครียดแล้ว ควรไปพบจิตแพทย์เพื่อขอคำปรึกษาต่อไปด้วยจึงจะเป็นการดี",
-            // image: "/images/stress_30_60.png",
             emoji: "😢",
             bgColor: "bg-red-50 border-red-200",
             badgeColor: "bg-red-200 text-red-900",
@@ -138,13 +131,18 @@ function StressAssessment() {
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             {questions.map((q, index) => (
-                                <fieldset
+                                // ✅ FIX: เปลี่ยนจาก <fieldset>/<legend> เป็น <div>/<p>
+                                // เพราะ <legend> มี behavior พิเศษใน HTML spec ที่ทำให้
+                                // text "ทะลุ" ออกนอกกรอบ border ของ <fieldset> โดยธรรมชาติ
+                                <div
                                     key={index}
+                                    role="group"
+                                    aria-labelledby={`q-label-${index}`}
                                     className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200"
                                 >
-                                    <legend className="mb-3 text-sm font-medium text-slate-800">
+                                    <p id={`q-label-${index}`} className="mb-3 text-sm font-medium text-slate-800">
                                         {index + 1}. {q}
-                                    </legend>
+                                    </p>
                                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                                         {["ไม่เคยเลย", "เป็นครั้งคราว", "เป็นบ่อย", "เป็นประจำ"].map(
                                             (label, val) => (
@@ -169,7 +167,7 @@ function StressAssessment() {
                                             )
                                         )}
                                     </div>
-                                </fieldset>
+                                </div>
                             ))}
 
                             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -205,7 +203,6 @@ function StressAssessment() {
                             คะแนนของคุณ: <span className="font-bold">{totalScore}</span> จาก 60
                         </p>
 
-                        {/* ลิงก์เพิ่มเติมตามคะแนน */}
                         {matchedRangeIndex === 3 && (
                             <div className="mt-4">
                                 <a
@@ -216,7 +213,6 @@ function StressAssessment() {
                                 </a>
                             </div>
                         )}
-
 
                         {matchedRangeIndex === 4 && (
                             <div className="mt-4">
@@ -229,17 +225,14 @@ function StressAssessment() {
                             </div>
                         )}
 
-                        {/* ภาพหลักของช่วงคะแนน */}
                         {matchedRangeIndex !== -1 && (
                             <div className={`mt-6 rounded-xl p-6 shadow-sm border ${ranges[matchedRangeIndex].bgColor}`}>
                                 <div className="flex items-start gap-4">
-                                    {/* อีโมจิ */}
                                     <div className="flex-shrink-0">
                                         <div className={`w-14 h-14 flex items-center justify-center rounded-full text-3xl ${ranges[matchedRangeIndex].emojiBg}`}>
                                             {ranges[matchedRangeIndex].emoji}
                                         </div>
                                     </div>
-                                    {/* ข้อความ */}
                                     <div>
                                         <div className={`font-bold px-4 py-1 rounded ${ranges[matchedRangeIndex].badgeColor}`}>
                                             {ranges[matchedRangeIndex].label} คะแนน
@@ -252,7 +245,6 @@ function StressAssessment() {
                             </div>
                         )}
 
-                        {/* ภาพทุกช่วงสเกล */}
                         <div className="mt-10">
                             <h3 className="text-sm font-medium text-slate-800 mb-3">
                                 ตารางภาพผลลัพธ์ทุกช่วงคะแนน
@@ -264,15 +256,12 @@ function StressAssessment() {
                                         className={`p-4 rounded-xl shadow-sm border ${r.bgColor} ${idx === matchedRangeIndex ? "ring-1 ring-slate-900" : "border-slate-200"
                                             }`}
                                     >
-
                                         <div className="flex items-start gap-4">
-                                            {/* อีโมจิ */}
                                             <div className="flex-shrink-0">
                                                 <div className={`w-14 h-14 flex items-center justify-center rounded-full text-3xl ${r.emojiBg}`}>
                                                     {r.emoji}
                                                 </div>
                                             </div>
-                                            {/* ข้อความ */}
                                             <div>
                                                 <div className={`font-bold px-4 py-1 rounded ${r.badgeColor}`}>
                                                     {r.label} คะแนน
@@ -284,12 +273,8 @@ function StressAssessment() {
                                         </div>
                                     </div>
                                 ))}
-                               
                             </div>
-                            
                         </div>
-                        
-
 
                         <button
                             onClick={handleRestart}
@@ -298,11 +283,7 @@ function StressAssessment() {
                             กลับไปทำแบบทดสอบอีกครั้ง
                         </button>
                     </div>
-                    
-                    
                 )}
-                {/* ✅ ใส่ตรงนี้ — โชว์เฉพาะตอนดูผลลัพธ์ */}
-{/* {mode === "result" && <Footer />} */}
             </div>
         </section>
     );
