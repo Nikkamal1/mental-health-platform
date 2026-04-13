@@ -205,7 +205,7 @@ function FlipCard({ index }) {
                   <p style={{
                     margin: 0, textAlign: "center",
                     fontFamily: "'Sarabun',sans-serif",
-                    fontSize: "clamp(0.70rem,1.3vw,0.92rem)",
+                    fontSize: "clamp(0.65rem,1.3vw,0.92rem)",
                     color: "#4a2c0a", fontWeight: 600, lineHeight: 1.8,
                     whiteSpace: "pre-line",
                   }}>{dearYouCards[index]}</p>
