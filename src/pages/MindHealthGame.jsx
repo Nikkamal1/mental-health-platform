@@ -113,92 +113,109 @@ function FlowerCornerYellow({ style }) {
 
 function FlipCard({ index }) {
   const [flipped, setFlipped] = useState(false);
+  const [mid, setMid] = useState(false); // true ระหว่าง animation
+
+  const handleFlip = () => {
+    if (mid) return;
+    setMid(true);
+    setTimeout(() => {
+      setFlipped(f => !f);
+      setMid(false);
+    }, 200); // สลับ content ตรงกลาง animation
+  };
+
+  // scaleX 1→0→1 จำลอง flip แบบกำลังพลิกการ์ด
+  // ทำงานทั้ง Safari iOS และ Chrome Android โดยไม่ใช้ preserve-3d
+  const scale = mid ? "scaleX(0)" : "scaleX(1)";
+
   return (
     <div style={{ width: "100%", position: "relative" }}>
       <div
-        onClick={() => setFlipped(f => !f)}
+        onClick={handleFlip}
         style={{
           position: "relative",
           width: "100%",
           paddingBottom: "133%",
-          perspective: "1000px",
           cursor: "pointer",
           userSelect: "none",
         }}
       >
         <div style={{
           position: "absolute", inset: 0,
-          transformStyle: "preserve-3d",
-          transition: "transform 0.65s cubic-bezier(0.4,0,0.2,1)",
-          transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+          transform: scale,
+          transition: mid ? "transform 0.2s ease-in" : "transform 0.2s ease-out",
         }}>
           {/* ── หน้า: Dear Me ── */}
-          <div style={{
-            position: "absolute", inset: 0, backfaceVisibility: "hidden",
-            background: "linear-gradient(145deg, #fdf8ed, #fef6e4)",
-            borderRadius: "16px",
-            boxShadow: "0 4px 20px rgba(180,150,60,0.15), 0 1px 4px rgba(0,0,0,0.06)",
-            border: "1.5px solid #f0dea0",
-            overflow: "hidden",
-            display: "flex", flexDirection: "column",
-          }}>
-            <DaisyCorner style={{ top: -4, right: -4 }} />
-            <DaisyCorner style={{ bottom: -4, left: -4, transform: "rotate(180deg)" }} />
-            <div style={{ padding: "14px 16px 2px", position: "relative", zIndex: 1 }}>
-              <span style={{ fontFamily: "'Dancing Script',cursive", fontSize: "clamp(0.9rem,2.5vw,1.2rem)", color: "#7b3f2e", fontWeight: 700 }}>
-                Dear me
-              </span>
-            </div>
-            <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "4px 16px 14px", position: "relative", zIndex: 1 }}>
-              <p style={{
-                margin: 0, textAlign: "center",
-                fontFamily: "'Sarabun',sans-serif",
-                fontSize: "clamp(0.75rem,1.8vw,0.92rem)",
-                color: "#4a2c0a", fontWeight: 600, lineHeight: 1.8,
-                whiteSpace: "pre-line",
-              }}>{dearMeCards[index]}</p>
-            </div>
-            <div style={{ textAlign: "center", paddingBottom: "8px", fontSize: "0.6rem", color: "#b45309", opacity: 0.5, zIndex: 1, position: "relative" }}>
-              แตะเพื่อพลิก ↺
-            </div>
-          </div>
-          {/* ── หลัง: Dear You ── */}
-          <div style={{
-            position: "absolute", inset: 0, backfaceVisibility: "hidden",
-            transform: "rotateY(180deg)",
-            background: "linear-gradient(145deg, #fffde7, #fff8e1, #fef3c7)",
-            borderRadius: "16px",
-            boxShadow: "0 4px 20px rgba(245,200,66,0.18), 0 1px 4px rgba(0,0,0,0.06)",
-            border: "1.5px solid #fde68a",
-            overflow: "hidden",
-            display: "flex", flexDirection: "column",
-          }}>
-            <FlowerCornerYellow style={{ top: -4, right: -4 }} />
-            <FlowerCornerYellow style={{ bottom: -4, left: -4, transform: "rotate(180deg)" }} />
-            <div style={{ padding: "14px 16px 2px", position: "relative", zIndex: 1 }}>
-              <span style={{ fontFamily: "'Dancing Script',cursive", fontSize: "clamp(0.9rem,2.5vw,1.2rem)", color: "#7b3f2e", fontWeight: 700 }}>
-                Dear you
-              </span>
-            </div>
-            <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "4px 14px 14px", position: "relative", zIndex: 1 }}>
-              <div style={{
-                background: "rgba(255,248,210,0.75)",
-                borderRadius: "50% 50% 50% 50% / 38% 38% 62% 62%",
-                padding: "16px 14px", width: "100%",
-              }}>
+          {!flipped && (
+            <div style={{
+              position: "absolute", inset: 0,
+              background: "linear-gradient(145deg, #fdf8ed, #fef6e4)",
+              borderRadius: "16px",
+              boxShadow: "0 4px 20px rgba(180,150,60,0.15), 0 1px 4px rgba(0,0,0,0.06)",
+              border: "1.5px solid #f0dea0",
+              overflow: "hidden",
+              display: "flex", flexDirection: "column",
+            }}>
+              <DaisyCorner style={{ top: -4, right: -4 }} />
+              <DaisyCorner style={{ bottom: -4, left: -4, transform: "rotate(180deg)" }} />
+              <div style={{ padding: "14px 16px 2px", position: "relative", zIndex: 1 }}>
+                <span style={{ fontFamily: "'Dancing Script',cursive", fontSize: "clamp(0.9rem,2.5vw,1.2rem)", color: "#7b3f2e", fontWeight: 700 }}>
+                  Dear me
+                </span>
+              </div>
+              <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "4px 16px 14px", position: "relative", zIndex: 1 }}>
                 <p style={{
                   margin: 0, textAlign: "center",
                   fontFamily: "'Sarabun',sans-serif",
-                  fontSize: "clamp(0.75rem,1.3vw,0.92rem)",
+                  fontSize: "clamp(0.75rem,1.8vw,0.92rem)",
                   color: "#4a2c0a", fontWeight: 600, lineHeight: 1.8,
                   whiteSpace: "pre-line",
-                }}>{dearYouCards[index]}</p>
+                }}>{dearMeCards[index]}</p>
+              </div>
+              <div style={{ textAlign: "center", paddingBottom: "8px", fontSize: "0.6rem", color: "#b45309", opacity: 0.5, zIndex: 1, position: "relative" }}>
+                แตะเพื่อพลิก ↺
               </div>
             </div>
-            <div style={{ textAlign: "center", paddingBottom: "8px", fontSize: "0.6rem", color: "#b45309", opacity: 0.5, zIndex: 1, position: "relative" }}>
-              แตะเพื่อพลิกกลับ ↺
+          )}
+
+          {/* ── หลัง: Dear You ── */}
+          {flipped && (
+            <div style={{
+              position: "absolute", inset: 0,
+              background: "linear-gradient(145deg, #fffde7, #fff8e1, #fef3c7)",
+              borderRadius: "16px",
+              boxShadow: "0 4px 20px rgba(245,200,66,0.18), 0 1px 4px rgba(0,0,0,0.06)",
+              border: "1.5px solid #fde68a",
+              overflow: "hidden",
+              display: "flex", flexDirection: "column",
+            }}>
+              <FlowerCornerYellow style={{ top: -4, right: -4 }} />
+              <FlowerCornerYellow style={{ bottom: -4, left: -4, transform: "rotate(180deg)" }} />
+              <div style={{ padding: "14px 16px 2px", position: "relative", zIndex: 1 }}>
+                <span style={{ fontFamily: "'Dancing Script',cursive", fontSize: "clamp(0.9rem,2.5vw,1.2rem)", color: "#7b3f2e", fontWeight: 700 }}>
+                  Dear you
+                </span>
+              </div>
+              <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "4px 14px 14px", position: "relative", zIndex: 1 }}>
+                <div style={{
+                  background: "rgba(255,248,210,0.75)",
+                  borderRadius: "50% 50% 50% 50% / 38% 38% 62% 62%",
+                  padding: "16px 14px", width: "100%",
+                }}>
+                  <p style={{
+                    margin: 0, textAlign: "center",
+                    fontFamily: "'Sarabun',sans-serif",
+                    fontSize: "clamp(0.75rem,1.3vw,0.92rem)",
+                    color: "#4a2c0a", fontWeight: 600, lineHeight: 1.8,
+                    whiteSpace: "pre-line",
+                  }}>{dearYouCards[index]}</p>
+                </div>
+              </div>
+              <div style={{ textAlign: "center", paddingBottom: "8px", fontSize: "0.6rem", color: "#b45309", opacity: 0.5, zIndex: 1, position: "relative" }}>
+                แตะเพื่อพลิกกลับ ↺
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
@@ -255,35 +272,8 @@ function HowToPlay() {
           {/* Divider */}
           <div style={{ borderTop: "1px dashed #e8d5a0", marginBottom: "14px" }} />
 
-          {/* คำแนะนำ */}
-          {/* <p style={{
-            fontFamily: "'Sarabun',sans-serif",
-            fontSize: "clamp(0.78rem,2vw,0.88rem)",
-            color: "#6b4423",
-            lineHeight: 1.9,
-            margin: "0 0 14px",
-            textAlign: "center",
-          }}>
-            เพื่อการเล่นอย่างมีประสิทธิภาพ พวกเราขอแนะนำให้เล่นตอนก่อนนอน
-            หรืออาจเลือกมุมเงียบๆ นั่งลงอย่างสบายใจ ยามที่คุณพร้อมจะให้เวลากับตัวเองสัก 5 นาที
-            พวกเราขอแนะนำให้คุณหยิบสมุดขึ้นมาหนึ่งเล่ม หาปากกาสักแท่ง
-            และจดคำตอบของคุณเองในแต่ละวัน เก็บไว้เป็นของขวัญของใจให้คุณใน 30 วันข้างหน้านี้
-            การ์ดชุดนี้สามารถหยิบกลับมาเล่นซ้ำได้เสมอ ในวันที่คุณอยากกลับมาสำรวจตัวเอง
-          </p> */}
-
           {/* Divider */}
           <div style={{ borderTop: "1px dashed #e8d5a0", marginBottom: "14px" }} />
-
-          {/* HOW TO PLAY label */}
-          {/* <p style={{
-            fontFamily: "'Dancing Script',cursive",
-            fontSize: "clamp(1rem,3vw,1.15rem)",
-            color: "#7b3f2e",
-            fontWeight: 700,
-            margin: "0 0 10px",
-          }}>
-            HOW TO PLAY
-          </p> */}
 
           {/* Steps */}
           {steps.map((item, i) => (
@@ -318,10 +308,9 @@ function MindHealthGame() {
         <p style={{ color: "rgba(255,255,255,0.8)", margin: 0, fontSize: "clamp(0.75rem,2vw,0.88rem)" }}>
           แตะการ์ดเพื่อพลิก · Dear Me → Dear You
         </p>
-        
       </div>
 
-      {/* How To Play — วางระหว่าง Header กับ Grid */}
+      {/* How To Play */}
       <HowToPlay />
 
       {/* Grid */}
