@@ -17,7 +17,7 @@ import Dashboard from "./pages/Dashboard"
 import qrImage from "./assets/payment.jpg"
 
 // ✅ เปิด/ปิดระบบตรงนี้
-const WEBSITE_ENABLED = false
+const WEBSITE_ENABLED = true 
 
 function App() {
 
